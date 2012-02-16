@@ -105,9 +105,11 @@
       $('#facebox .content').empty().
         append('<div class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>')
 
-      $('#facebox').show().css({
-        top:	getPageScroll()[1] + (getPageHeight() / 10),
-        left:	$(window).width() / 2 - ($('#facebox .popup').outerWidth() / 2)
+      FB.Canvas.getPageInfo(function(info) {
+        $('#facebox').show().css({
+          top: info.scrollTop + (info.clientHeight / 10),
+          left:	$(window).width() / 2 - ($('#facebox .popup').outerWidth() / 2)
+        })
       })
 
       $(document).bind('keydown.facebox', function(e) {
@@ -188,35 +190,6 @@
       .append('<img src="'
               + $.facebox.settings.closeImage
               + '" class="close_image" title="close">')
-  }
-
-  // getPageScroll() by quirksmode.com
-  function getPageScroll() {
-    var xScroll, yScroll;
-    if (self.pageYOffset) {
-      yScroll = self.pageYOffset;
-      xScroll = self.pageXOffset;
-    } else if (document.documentElement && document.documentElement.scrollTop) {	 // Explorer 6 Strict
-      yScroll = document.documentElement.scrollTop;
-      xScroll = document.documentElement.scrollLeft;
-    } else if (document.body) {// all other Explorers
-      yScroll = document.body.scrollTop;
-      xScroll = document.body.scrollLeft;
-    }
-    return new Array(xScroll,yScroll)
-  }
-
-  // Adapted from getPageSize() by quirksmode.com
-  function getPageHeight() {
-    var windowHeight
-    if (self.innerHeight) {	// all except Explorer
-      windowHeight = self.innerHeight;
-    } else if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode
-      windowHeight = document.documentElement.clientHeight;
-    } else if (document.body) { // other Explorers
-      windowHeight = document.body.clientHeight;
-    }
-    return windowHeight
   }
 
   // Backwards compatibility
