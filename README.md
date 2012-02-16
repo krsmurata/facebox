@@ -1,4 +1,5 @@
 # Facebox
+**WARNING!** This is a fork that uses [Facebook Javascript SDK](http://developers.facebook.com/docs/reference/javascript/) to calculate the box position for Faceook iFrame Apps. For the original Facebox please go to [https://github.com/defunkt/facebox](https://github.com/defunkt/facebox).
 
 Facebox is a jQuery-based, Facebook-style lightbox which can display images, divs, or entire remote pages.
 
@@ -21,8 +22,8 @@ This release relies on a lot of advanced CSS techniques (box-shadow, border-radi
 * Opera - I just don't care
 
 ## Usage
-
-Include jQuery, `src/facebox.js` and `src/facebox.css`. Then tell facebox where you've put `src/loading.gif` and `src/closelabel.png`
+ 
+Include jQuery, [Facebook Javascript SDK](http://developers.facebook.com/docs/reference/javascript/), `src/facebox.js` and `src/facebox.css`. Then tell facebox where you've put `src/loading.gif` and `src/closelabel.png`
 
     $.facebox.settings.closeImage = '/images/facebox/closelabel.png'
     $.facebox.settings.loadingImage = '/images/facebox/loading.gif'
@@ -32,6 +33,23 @@ Calling facebox() on any anchor tag will do the trick, it's easier to give your 
     jQuery(document).ready(function($) {
       $('a[rel*=facebox]').facebox()
     })
+
+If you are loading Facebook Javascript SDK asynchronously, make sure to call Facebox inside initialization code:
+    
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : 'YOUR_APP_ID', // App ID
+            channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+        });
+
+        // Additional initialization code here
+        jQuery(document).ready(function($) {
+            $('a[rel*=facebox]').facebox()
+        })
+    };
 
 Any anchor links with `rel="facebox"` with now automatically use facebox:
 
